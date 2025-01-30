@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		071A78402D3043A500525429 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 071A783F2D3043A500525429 /* MapboxMaps */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		078D3B312D2F007800AB7D17 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -29,9 +33,22 @@
 		078D3B3A2D2F007800AB7D17 /* maptivityUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = maptivityUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		071A783C2D3041E100525429 /* Exceptions for "maptivity" folder in "maptivity" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 078D3B1F2D2F007600AB7D17 /* maptivity */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		078D3B222D2F007600AB7D17 /* maptivity */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				071A783C2D3041E100525429 /* Exceptions for "maptivity" folder in "maptivity" target */,
+			);
 			path = maptivity;
 			sourceTree = "<group>";
 		};
@@ -52,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				071A78402D3043A500525429 /* MapboxMaps in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,12 +90,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		071A783E2D3043A500525429 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		078D3B172D2F007600AB7D17 = {
 			isa = PBXGroup;
 			children = (
 				078D3B222D2F007600AB7D17 /* maptivity */,
 				078D3B332D2F007800AB7D17 /* maptivityTests */,
 				078D3B3D2D2F007800AB7D17 /* maptivityUITests */,
+				071A783E2D3043A500525429 /* Frameworks */,
 				078D3B212D2F007600AB7D17 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +138,7 @@
 			);
 			name = maptivity;
 			packageProductDependencies = (
+				071A783F2D3043A500525429 /* MapboxMaps */,
 			);
 			productName = maptivity;
 			productReference = 078D3B202D2F007600AB7D17 /* maptivity.app */;
@@ -195,6 +222,9 @@
 			);
 			mainGroup = 078D3B172D2F007600AB7D17;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				071A783D2D3042D500525429 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 078D3B212D2F007600AB7D17 /* Products */;
 			projectDirPath = "";
@@ -390,6 +420,8 @@
 		};
 		078D3B452D2F007800AB7D17 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 078D3B222D2F007600AB7D17 /* maptivity */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -399,6 +431,7 @@
 				DEVELOPMENT_TEAM = KT3XW42XR6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = maptivity/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -419,6 +452,8 @@
 		};
 		078D3B462D2F007800AB7D17 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 078D3B222D2F007600AB7D17 /* maptivity */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -428,6 +463,7 @@
 				DEVELOPMENT_TEAM = KT3XW42XR6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = maptivity/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -558,6 +594,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		071A783D2D3042D500525429 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mapbox/mapbox-maps-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		071A783F2D3043A500525429 /* MapboxMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 071A783D2D3042D500525429 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */;
+			productName = MapboxMaps;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 078D3B182D2F007600AB7D17 /* Project object */;
 }
