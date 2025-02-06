@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		071A78402D3043A500525429 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 071A783F2D3043A500525429 /* MapboxMaps */; };
+		078E9B512D4B0A2600C8FD8A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 078E9B4A2D4B0A2600C8FD8A /* .gitignore */; };
+		078E9B532D4B0A2600C8FD8A /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 078E9B4C2D4B0A2600C8FD8A /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +33,8 @@
 		078D3B202D2F007600AB7D17 /* maptivity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = maptivity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		078D3B302D2F007800AB7D17 /* maptivityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = maptivityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		078D3B3A2D2F007800AB7D17 /* maptivityUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = maptivityUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		078E9B4A2D4B0A2600C8FD8A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		078E9B4C2D4B0A2600C8FD8A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -100,6 +104,8 @@
 		078D3B172D2F007600AB7D17 = {
 			isa = PBXGroup;
 			children = (
+				078E9B4A2D4B0A2600C8FD8A /* .gitignore */,
+				078E9B4C2D4B0A2600C8FD8A /* Config.xcconfig */,
 				078D3B222D2F007600AB7D17 /* maptivity */,
 				078D3B332D2F007800AB7D17 /* maptivityTests */,
 				078D3B3D2D2F007800AB7D17 /* maptivityUITests */,
@@ -242,6 +248,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				078E9B512D4B0A2600C8FD8A /* .gitignore in Resources */,
+				078E9B532D4B0A2600C8FD8A /* Config.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,8 +428,7 @@
 		};
 		078D3B452D2F007800AB7D17 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 078D3B222D2F007600AB7D17 /* maptivity */;
-			baseConfigurationReferenceRelativePath = Config.xcconfig;
+			baseConfigurationReference = 078E9B4C2D4B0A2600C8FD8A /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -452,8 +459,7 @@
 		};
 		078D3B462D2F007800AB7D17 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 078D3B222D2F007600AB7D17 /* maptivity */;
-			baseConfigurationReferenceRelativePath = Config.xcconfig;
+			baseConfigurationReference = 078E9B4C2D4B0A2600C8FD8A /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

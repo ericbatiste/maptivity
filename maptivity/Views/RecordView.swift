@@ -1,9 +1,10 @@
 import SwiftUI
+import MapboxMaps
 
 struct RecordView: View {
+    @State private var routeCoordinates: [CLLocationCoordinate2D] = []
     @State private var isRecording = false
     @State private var isOnRoute = false
-    @State private var selectedActivity = "Hike"
     @Binding var selectedTab: Int
 
     var body: some View {
@@ -15,11 +16,6 @@ struct RecordView: View {
                 
                 Spacer()
                 
-                Text("\(selectedActivity)")
-                    .font(.headline)
-                
-                Spacer()
-                
                 Button {
                     // action
                 } label: {
@@ -28,12 +24,15 @@ struct RecordView: View {
             }
             .padding()
             
-            MapView(isRecording: $isRecording)
+            MapView(
+                isRecording: $isRecording,
+                routeCoordinates: $routeCoordinates
+            )
             
             RecordControls(
                 isRecording: $isRecording,
                 isOnRoute: $isOnRoute,
-                selectedActivity: $selectedActivity
+                routeCoordinates: $routeCoordinates
             )
         }
     }

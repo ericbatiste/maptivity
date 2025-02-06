@@ -5,10 +5,9 @@ import Combine
 
 struct MapView: View {
     @State private var viewport: Viewport = .followPuck(zoom: 16, bearing: .constant(0))
-    @State private var userLocation: CLLocationCoordinate2D?
-    @State private var routeCoordinates: [CLLocationCoordinate2D] = []
     @State private var cancellables = Set<AnyCancellable>()
     @Binding var isRecording: Bool
+    @Binding var routeCoordinates: Array<CLLocationCoordinate2D>
     
     var body: some View {
         VStack {
@@ -37,7 +36,7 @@ struct MapView: View {
         proxy.location?.onLocationChange.observe { locations in
             if isRecording, let newLocation = locations.last?.coordinate {
                 routeCoordinates.append(newLocation)
-                print(routeCoordinates)
+//              print(routeCoordinates)
             }
         }
         .store(in: &cancellables)

@@ -25,7 +25,7 @@ struct ContentView: View {
                     Image(systemName: "point.topleft.down.to.point.bottomright.filled.curvepath")
                     Text("Activity")
                 }
-                .tag(1)
+                .tag(2)
         }
     }
 }
