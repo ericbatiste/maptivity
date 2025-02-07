@@ -6,6 +6,7 @@ struct RecordControls: View {
     @Binding var isRecording: Bool
     @Binding var isOnRoute: Bool
     @Binding var routeCoordinates: Array<CLLocationCoordinate2D>
+    @Binding var navToLogView: Bool
     
     var body: some View {
         VStack {
@@ -25,8 +26,8 @@ struct RecordControls: View {
                     CircleButton(systemName: "stop.circle") {
                         isRecording = false
                         isOnRoute = false
-                        encodedRoute = routeCoordinates.encodedPolyline()
-//                      print("Encoded route: \(encodedRoute)")
+                        // encodedRoute = routeCoordinates.encodedPolyline()
+                        navToLogView = true
                     }
                 }
                 

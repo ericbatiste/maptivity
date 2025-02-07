@@ -5,25 +5,11 @@ struct RecordView: View {
     @State private var routeCoordinates: [CLLocationCoordinate2D] = []
     @State private var isRecording = false
     @State private var isOnRoute = false
+    @State private var navToLogView = false
     @Binding var selectedTab: Int
 
     var body: some View {
         VStack {
-            HStack {
-                Button("Exit") {
-                    selectedTab = 0
-                }
-                
-                Spacer()
-                
-                Button {
-                    // action
-                } label: {
-                    Image(systemName: "gearshape.fill")
-                }
-            }
-            .padding()
-            
             MapView(
                 isRecording: $isRecording,
                 routeCoordinates: $routeCoordinates
@@ -32,8 +18,34 @@ struct RecordView: View {
             RecordControls(
                 isRecording: $isRecording,
                 isOnRoute: $isOnRoute,
-                routeCoordinates: $routeCoordinates
+                routeCoordinates: $routeCoordinates,
+                navToLogView: $navToLogView
             )
+        }
+        .navigationTitle("Get After It!")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    selectedTab = 0
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 20, weight: .bold))
+                }
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    // Go to Settings.
+                } label: {
+                    Image(systemName: "gear")
+                        .font(.system(size: 20, weight: .bold))
+                }
+            }
+        }
+        .toolbar(.hidden, for: .tabBar)
+        .navigationDestination(isPresented: $navToLogView) {
+            LogActivityView()
         }
     }
 }

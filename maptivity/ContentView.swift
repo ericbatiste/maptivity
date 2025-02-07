@@ -12,13 +12,14 @@ struct ContentView: View {
                 }
                 .tag(0)
             
-            RecordView(selectedTab: $selectedTab)
-                .tabItem {
-                    Image(systemName: "record.circle")
-                    Text("Record")
-                }
-                .toolbar(.hidden, for: .tabBar)
-                .tag(1)
+            NavigationStack {
+                RecordView(selectedTab: $selectedTab)
+            }
+            .tabItem {
+                Image(systemName: "record.circle")
+                Text("Record")
+            }
+            .tag(1)
             
             ActivityView()
                 .tabItem {
