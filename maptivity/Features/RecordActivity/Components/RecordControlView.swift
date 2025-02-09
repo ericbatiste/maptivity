@@ -1,11 +1,11 @@
 import SwiftUI
 import MapboxMaps
 
-struct RecordControls: View {
-    @State private var encodedRoute: String = ""
+struct RecordControlView: View {
     @Binding var isRecording: Bool
     @Binding var isOnRoute: Bool
-    @Binding var routeCoordinates: Array<CLLocationCoordinate2D>
+    @Binding var startTime: Date
+    @Binding var endTime: Date
     @Binding var navToLogView: Bool
     
     var body: some View {
@@ -26,8 +26,8 @@ struct RecordControls: View {
                     CircleButton(systemName: "stop.circle") {
                         isRecording = false
                         isOnRoute = false
-                        // encodedRoute = routeCoordinates.encodedPolyline()
                         navToLogView = true
+                        endTime = Date()
                     }
                 }
                 
@@ -35,6 +35,7 @@ struct RecordControls: View {
                 CircleButton(systemName: "record.circle") {
                     isRecording = true
                     isOnRoute = true
+                    startTime = Date()
                 }
             }
         }

@@ -41,7 +41,7 @@
 		071A783C2D3041E100525429 /* Exceptions for "maptivity" folder in "maptivity" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Resources/Info.plist,
 			);
 			target = 078D3B1F2D2F007600AB7D17 /* maptivity */;
 		};
@@ -438,7 +438,7 @@
 				DEVELOPMENT_TEAM = KT3XW42XR6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = maptivity/Info.plist;
+				INFOPLIST_FILE = maptivity/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -469,7 +469,7 @@
 				DEVELOPMENT_TEAM = KT3XW42XR6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = maptivity/Info.plist;
+				INFOPLIST_FILE = maptivity/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

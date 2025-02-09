@@ -1,11 +1,17 @@
 import SwiftUI
-import MapboxMaps
+import CoreLocation
 
 struct RecordView: View {
+    @StateObject private var viewModel = RecordViewModel()
+    
     @State private var routeCoordinates: [CLLocationCoordinate2D] = []
+    @State private var encodedRoute: String = ""
+    @State private var startTime: Date = Date()
+    @State private var endTime: Date = Date()
     @State private var isRecording = false
     @State private var isOnRoute = false
     @State private var navToLogView = false
+    
     @Binding var selectedTab: Int
 
     var body: some View {
@@ -15,10 +21,11 @@ struct RecordView: View {
                 routeCoordinates: $routeCoordinates
             )
             
-            RecordControls(
+            RecordControlView(
                 isRecording: $isRecording,
                 isOnRoute: $isOnRoute,
-                routeCoordinates: $routeCoordinates,
+                startTime: $startTime,
+                endTime: $endTime,
                 navToLogView: $navToLogView
             )
         }
@@ -45,7 +52,13 @@ struct RecordView: View {
         }
         .toolbar(.hidden, for: .tabBar)
         .navigationDestination(isPresented: $navToLogView) {
-            LogActivityView()
+            LogActivityView(
+                viewModel: viewModel,
+                startTime: $startTime,
+                endTime: $endTime,
+                routeCoordinates: $routeCoordinates,
+                encodedRoute: $encodedRoute
+            )
         }
     }
 }

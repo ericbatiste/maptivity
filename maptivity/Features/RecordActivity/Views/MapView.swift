@@ -23,7 +23,7 @@ struct MapView: View {
                 }
                 .mapStyle(.outdoors)
                 .overlay(alignment: .bottomTrailing) {
-                    LocateButton(viewport: $viewport)
+                    LocateButtonView(viewport: $viewport)
                 }
                 .onAppear {
                     observeLocationChanges(proxy: proxy)

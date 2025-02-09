@@ -1,7 +1,7 @@
 import SwiftUI
 import MapboxMaps
 
-struct LocateButton: View {
+struct LocateButtonView: View {
     @Binding var viewport: Viewport
 
     var body: some View {
