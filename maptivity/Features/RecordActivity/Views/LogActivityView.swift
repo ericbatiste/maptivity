@@ -28,38 +28,96 @@ struct LogActivityView: View {
     
     var body: some View {
         Form {
-            Section(header: Text("Activity Details")) {
-                TextField("Title", text: $title)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                
-                Picker("Activity", selection: $designation) {
-                    ForEach(activities, id: \.self) { activity in
-                        Text(activity)
+            Section {
+                VStack(spacing: 20) {
+                    
+                    // Title Form Element...
+                    TextField("Give your activity a title...", text: $title)
+                        .padding(12)
+                        .background(Color(.systemBackground))
+                        .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.blue, lineWidth: 1)
+                        )
+                        .tint(.blue)
+                    
+                    // Picker Form Element...
+                    Menu {
+                        Picker("Activity", selection: $designation) {
+                            ForEach(activities, id: \.self) { activity in
+                                Text(activity)
+                                    .tag(activity)
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text(designation)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                                .foregroundColor(.gray)
+                        }
+                        .padding(12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color(.systemBackground))
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color(.blue), lineWidth: 1)
+                        )
                     }
-                }
-                
-                TextEditor(text: $notes)
-                    .frame(minHeight: 100)
+                    
+                    // Notes Form Element...
+                    ZStack(alignment: .topLeading) {
+                        TextEditor(text: $notes)
+                            .frame(minHeight: 120)
+                        
+                        if notes.isEmpty {
+                            Text("Anything to note about this adventure?")
+                                .foregroundColor(Color(.systemGray3))
+                                .padding(8)
+                                .allowsHitTesting(false)
+                        }
+                    }
+                    .padding(4)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Color(.systemBackground))
+                    )
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                            .stroke(Color(.blue), lineWidth: 1)
                     )
+                }
+                .padding(.vertical, 20)
             }
-            
+        
             Section {
-                Button {
-                    submitActivity()
-                } label: {
-                    Text("Submit")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                Button(action: submitActivity) {
+                    HStack {
+                        Spacer()
+                        if viewModel.isLoading {
+                            ProgressView()
+                                .tint(.white)
+                                .padding(.trailing, 8)
+                        } else {
+                            Text("Submit Activity")
+                                .fontWeight(.semibold)
+                        }
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(title.isEmpty ? Color(.systemGray3) : Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
                 }
                 .disabled(title.isEmpty || viewModel.isLoading)
             }
         }
+        .scrollDismissesKeyboard(.interactively)
         .navigationTitle("Log Activity")
         .alert(isPresented: $viewModel.showAlert) {
             Alert(
@@ -90,6 +148,18 @@ struct LogActivityView: View {
             endTime: formattedEndTime,
             route: encodedRoute,
             distance: distance
+        )
+    }
+}
+
+#Preview() {
+    NavigationView {
+        LogActivityView(
+            viewModel: RecordViewModel(),
+            startTime: .constant(Date()),
+            endTime: .constant(Date()),
+            routeCoordinates: .constant([]),
+            encodedRoute: .constant("")
         )
     }
 }
