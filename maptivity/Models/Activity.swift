@@ -2,6 +2,7 @@ import Foundation
 
 struct Activity: Codable, Identifiable {
     let id: Int
+    let title: String
     let designation: String
     let notes: String
     let startTime: String

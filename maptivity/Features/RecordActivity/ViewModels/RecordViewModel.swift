@@ -28,7 +28,9 @@ class RecordViewModel: ObservableObject {
                     route: route,
                     distance: distance
                 )
+                
                 _ = try await APIRequests.shared.createActivity(newActivity)
+                
                 error = nil
             } catch let error as APIError {
                 self.error = error
