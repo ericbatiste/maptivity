@@ -13,7 +13,7 @@ class RecordViewModel: ObservableObject {
         startTime: String,
         endTime: String,
         route: String,
-        distance: Float
+        distance: Double
     ) {
         isLoading = true
         

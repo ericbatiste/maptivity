@@ -4,10 +4,7 @@ import CoreLocation
 struct RecordView: View {
     @StateObject private var viewModel = RecordViewModel()
     
-    @State private var routeCoordinates: [CLLocationCoordinate2D] = []
-    @State private var encodedRoute: String = ""
-    @State private var startTime: Date = Date()
-    @State private var endTime: Date = Date()
+    @State private var routeData: [LocationData] = []
     @State private var isRecording = false
     @State private var isOnRoute = false
     @State private var navToLogView = false
@@ -18,14 +15,12 @@ struct RecordView: View {
         VStack {
             MapView(
                 isRecording: $isRecording,
-                routeCoordinates: $routeCoordinates
+                routeData: $routeData
             )
             
             RecordControlView(
                 isRecording: $isRecording,
                 isOnRoute: $isOnRoute,
-                startTime: $startTime,
-                endTime: $endTime,
                 navToLogView: $navToLogView
             )
         }
@@ -54,10 +49,7 @@ struct RecordView: View {
         .navigationDestination(isPresented: $navToLogView) {
             LogActivityView(
                 viewModel: viewModel,
-                startTime: $startTime,
-                endTime: $endTime,
-                routeCoordinates: $routeCoordinates,
-                encodedRoute: $encodedRoute
+                routeData: $routeData
             )
         }
     }

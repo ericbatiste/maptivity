@@ -7,13 +7,9 @@ struct LogActivityView: View {
     @State private var title: String = ""
     @State private var designation: String = "Hike"
     @State private var notes: String = ""
-    @State private var distance: Float = 0.0
     @State private var showingSubmitAlert: Bool = false
     
-    @Binding var startTime: Date
-    @Binding var endTime: Date
-    @Binding var routeCoordinates: Array<CLLocationCoordinate2D>
-    @Binding var encodedRoute: String
+    @Binding var routeData: [LocationData]
     
     let activities = [
         "Walk",
@@ -125,7 +121,7 @@ struct LogActivityView: View {
                 message: Text(viewModel.error?.localizedDescription ?? "Activity submitted successfully!"),
                 dismissButton: .default(Text("OK")) {
                     if viewModel.error == nil {
-                        routeCoordinates = []
+                        routeData = []
                         title = ""
                         notes = ""
                     }
@@ -136,9 +132,13 @@ struct LogActivityView: View {
     }
     
     private func submitActivity() {
-        let formattedStartTime = startTime.rubyDateTime
-        let formattedEndTime = endTime.rubyDateTime
-        encodedRoute = routeCoordinates.encodedPolyline()
+        guard !routeData.isEmpty else { return }
+        
+        let formattedStartTime = routeData.first!.timestamp.rubyDateTime
+        let formattedEndTime = routeData.last!.timestamp.rubyDateTime
+        let routeCoordinates = routeData.map { $0.coordinate }
+        let encodedRoute = routeCoordinates.encodedPolyline()
+        let totalDistance = routeData.last!.distance
         
         viewModel.createActivity(
             title: title,
@@ -147,19 +147,10 @@ struct LogActivityView: View {
             startTime: formattedStartTime,
             endTime: formattedEndTime,
             route: encodedRoute,
-            distance: distance
+            distance: totalDistance
         )
     }
 }
 
-#Preview() {
-    NavigationView {
-        LogActivityView(
-            viewModel: RecordViewModel(),
-            startTime: .constant(Date()),
-            endTime: .constant(Date()),
-            routeCoordinates: .constant([]),
-            encodedRoute: .constant("")
-        )
-    }
-}
+
+

@@ -4,8 +4,6 @@ import MapboxMaps
 struct RecordControlView: View {
     @Binding var isRecording: Bool
     @Binding var isOnRoute: Bool
-    @Binding var startTime: Date
-    @Binding var endTime: Date
     @Binding var navToLogView: Bool
     
     var body: some View {
@@ -27,7 +25,6 @@ struct RecordControlView: View {
                         isRecording = false
                         isOnRoute = false
                         navToLogView = true
-                        endTime = Date()
                     }
                 }
                 
@@ -35,7 +32,6 @@ struct RecordControlView: View {
                 CircleButton(systemName: "record.circle") {
                     isRecording = true
                     isOnRoute = true
-                    startTime = Date()
                 }
             }
         }
