@@ -52,8 +52,6 @@ struct MapView: View {
                 altitude: newLocation.altitude ?? 0,
                 timestamp: newLocation.timestamp
             ))
-            
-            print(routeData)
         }
         .store(in: &cancellables)
     }

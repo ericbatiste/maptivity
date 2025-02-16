@@ -28,7 +28,6 @@ struct ActivityView: View {
     }
 }
 
-
 struct ActivityCardView: View {
     var activity: Activity
     
@@ -49,4 +48,3 @@ struct ActivityCardView: View {
         }
     }
 }
-
