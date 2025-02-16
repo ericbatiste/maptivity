@@ -9,7 +9,7 @@ extension Date {
         return formatter
     }()
     
-    var rubyDateTime: String {
+    var toRubyDateTime: String {
         return Date.rubyDateFormatter.string(from: self)
     }
     

@@ -1,13 +1,16 @@
 import Foundation
 import CoreLocation
 
-extension Array where Element == CLLocationCoordinate2D {
+extension Array where Element == LocationData {
     func encodedPolyline() -> String {
+        
+        let coordinates = map(\.coordinate)
+        
         var lastLat = 0
         var lastLng = 0
         var result = ""
         
-        for coordinate in self {
+        for coordinate in coordinates {
             let lat = Int(round(coordinate.latitude * 1e5))
             let lng = Int(round(coordinate.longitude * 1e5))
             
