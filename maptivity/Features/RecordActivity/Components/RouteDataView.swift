@@ -22,18 +22,20 @@ struct RouteDataView: View {
     }
     
     private var formattedDistance: String {
-        guard let distance = activeData?.distance else { return "N/A" }
-        return String(format: "%.2f m", distance)
+        guard var distance = activeData?.distance else { return "N/A" }
+        distance /= 1000
+        return String(format: "%.1f km", distance)
     }
     
     private var formattedSpeed: String {
-        guard let speed = activeData?.speed else { return "N/A" }
-        return String(format: "%.2f m/s", speed)
+        guard var speed = activeData?.speed else { return "N/A" }
+        speed *= 3.6
+        return String(format: "%.1f km/h", speed)
     }
     
     private var formattedAltitude: String {
         guard let altitude = activeData?.altitude else { return "N/A" }
-        return String(format: "%.2f m", altitude)
+        return String(format: "%.1f m", altitude)
     }
     
     private var timer: String {
