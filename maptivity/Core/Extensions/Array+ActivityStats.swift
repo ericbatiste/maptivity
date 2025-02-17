@@ -23,6 +23,7 @@ extension Array where Element == LocationData {
             if value > prevValue {
                 total += Double(value - prevValue)
             }
+            prevValue = value
         }
         
         return total
@@ -37,6 +38,7 @@ extension Array where Element == LocationData {
             if value < prevValue {
                 total += Double(prevValue - value)
             }
+            prevValue = value
         }
         
         return total
