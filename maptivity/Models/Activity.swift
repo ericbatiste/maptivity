@@ -10,6 +10,11 @@ struct Activity: Codable, Identifiable {
     let endTime: String
     let route: String
     let distance: Double
+    let maxSpeed: Double
+    let averageSpeed: Double
+    let climbing: Double
+    let descending: Double
+    
 }
 
 struct NewActivity: Codable {
@@ -20,6 +25,10 @@ struct NewActivity: Codable {
     let endTime: String
     let route: String
     let distance: Double
+    let maxSpeed: Double
+    let averageSpeed: Double
+    let climbing: Double
+    let descending: Double
 }
 
 struct LocationData {

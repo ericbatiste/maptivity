@@ -134,11 +134,14 @@ struct LogActivityView: View {
     private func submitActivity() {
         guard !routeData.isEmpty else { return }
         
-        let formattedStartTime = routeData.first!.timestamp.rubyDateTime
-        let formattedEndTime = routeData.last!.timestamp.rubyDateTime
-        let routeCoordinates = routeData.map { $0.coordinate }
-        let encodedRoute = routeCoordinates.encodedPolyline()
+        let formattedStartTime = routeData.first!.timestamp.toRubyDateTime
+        let formattedEndTime = routeData.last!.timestamp.toRubyDateTime
+        let encodedRoute = routeData.encodedPolyline()
         let totalDistance = routeData.last!.distance
+        let maxSpeed = routeData.maxSpeed()
+        let averageSpeed = routeData.averageSpeed()
+        let climbing = routeData.totalClimb()
+        let descending = routeData.totalDescent()
         
         viewModel.createActivity(
             title: title,
@@ -147,7 +150,11 @@ struct LogActivityView: View {
             startTime: formattedStartTime,
             endTime: formattedEndTime,
             route: encodedRoute,
-            distance: totalDistance
+            distance: totalDistance,
+            maxSpeed: maxSpeed,
+            averageSpeed: averageSpeed,
+            climbing: climbing,
+            descending: descending
         )
     }
 }

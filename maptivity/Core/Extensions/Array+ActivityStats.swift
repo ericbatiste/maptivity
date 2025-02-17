@@ -1,5 +1,4 @@
 import Foundation
-import CoreLocation
 
 extension Array where Element == LocationData {
     func averageSpeed() -> Double {

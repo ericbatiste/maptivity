@@ -13,7 +13,11 @@ class RecordViewModel: ObservableObject {
         startTime: String,
         endTime: String,
         route: String,
-        distance: Double
+        distance: Double,
+        maxSpeed: Double,
+        averageSpeed: Double,
+        climbing: Double,
+        descending: Double
     ) {
         isLoading = true
         
@@ -26,7 +30,11 @@ class RecordViewModel: ObservableObject {
                     startTime: startTime,
                     endTime: endTime,
                     route: route,
-                    distance: distance
+                    distance: distance,
+                    maxSpeed: maxSpeed,
+                    averageSpeed: averageSpeed,
+                    climbing: climbing,
+                    descending: descending
                 )
                 
                 _ = try await APIRequests.shared.createActivity(newActivity)
