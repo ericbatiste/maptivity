@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		070B21C72D725301006B71BE /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 070B21C62D725301006B71BE /* KeychainSwift */; };
 		071A78402D3043A500525429 /* MapboxMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 071A783F2D3043A500525429 /* MapboxMaps */; };
 		078E9B512D4B0A2600C8FD8A /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 078E9B4A2D4B0A2600C8FD8A /* .gitignore */; };
 		078E9B532D4B0A2600C8FD8A /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 078E9B4C2D4B0A2600C8FD8A /* Config.xcconfig */; };
@@ -73,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				070B21C72D725301006B71BE /* KeychainSwift in Frameworks */,
 				071A78402D3043A500525429 /* MapboxMaps in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,6 +147,7 @@
 			name = maptivity;
 			packageProductDependencies = (
 				071A783F2D3043A500525429 /* MapboxMaps */,
+				070B21C62D725301006B71BE /* KeychainSwift */,
 			);
 			productName = maptivity;
 			productReference = 078D3B202D2F007600AB7D17 /* maptivity.app */;
@@ -230,6 +233,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				071A783D2D3042D500525429 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */,
+				070B21C52D725301006B71BE /* XCRemoteSwiftPackageReference "keychain-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 078D3B212D2F007600AB7D17 /* Products */;
@@ -602,6 +606,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		070B21C52D725301006B71BE /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 24.0.0;
+			};
+		};
 		071A783D2D3042D500525429 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mapbox/mapbox-maps-ios.git";
@@ -613,6 +625,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		070B21C62D725301006B71BE /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 070B21C52D725301006B71BE /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
+		};
 		071A783F2D3043A500525429 /* MapboxMaps */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 071A783D2D3042D500525429 /* XCRemoteSwiftPackageReference "mapbox-maps-ios" */;
