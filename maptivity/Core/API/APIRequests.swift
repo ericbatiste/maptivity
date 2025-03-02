@@ -2,7 +2,7 @@ import SwiftUI
 
 class APIRequests {
     static let shared = APIRequests()
-    private let keychain = KeychainWrapper()
+    private let keychain = Keychain()
     private let rootPath = "http://localhost:3000/api/v1/"
     
     func fetchActivities() async throws -> [Activity] {

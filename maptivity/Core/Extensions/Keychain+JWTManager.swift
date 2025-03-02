@@ -1,6 +1,6 @@
 import Foundation
 
-extension KeychainWrapper {
+extension Keychain {
     private enum TokenKeys {
         static let access = "access_token"
         static let refresh = "refresh_token"

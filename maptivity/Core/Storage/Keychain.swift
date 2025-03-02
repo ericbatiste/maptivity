@@ -1,7 +1,7 @@
 import Foundation
 import KeychainSwift
 
-final class KeychainWrapper {
+final class Keychain {
     private let keychain: KeychainSwift
     
     init() {

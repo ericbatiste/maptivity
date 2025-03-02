@@ -4,7 +4,7 @@ import SwiftUI
 struct maptivityApp: App {
     var body: some Scene {
         WindowGroup {
-            RootView()
+            AuthRouter()
         }
     }
 }
