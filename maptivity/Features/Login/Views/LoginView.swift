@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct LoginView: View {
+    @EnvironmentObject var authManager: AuthManager
     @State private var email: String = ""
     @State private var password: String = ""
     
@@ -34,7 +35,11 @@ struct LoginView: View {
                         )
                         .tint(.blue)
                     
-                    Button(action: {}) {
+                    Button {
+                        Task {
+                            await authManager.login(email: email, password: password)
+                        }
+                    } label: {
                         Text("Submit")
                             .frame(maxWidth: .infinity)
                             .font(.headline)
@@ -60,8 +65,4 @@ struct LoginView: View {
             .ignoresSafeArea()
         }
     }
-}
-
-#Preview {
-    LoginView()
 }

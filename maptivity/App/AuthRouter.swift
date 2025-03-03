@@ -1,16 +1,18 @@
 import SwiftUI
 
 struct AuthRouter: View {
-    private var authManager = ""
+    @StateObject private var authManager = AuthManager()
     
     var body: some View {
         Group {
-            if authManager == "loading" {
+            if authManager.isLoading {
                 LoadingView()
-            } else if authManager == "authenticated" {
+            } else if authManager.isAuthenticated {
                 RootView()
+                    .environmentObject(authManager)
             } else {
                 LoginView()
+                    .environmentObject(authManager)
             }
         }
     }
