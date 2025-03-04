@@ -2,7 +2,7 @@ import SwiftUI
 import CoreLocation
 
 struct RecordView: View {
-    @StateObject private var viewModel = RecordViewModel()
+    @EnvironmentObject var apiService: APIService
     
     @State private var routeData: [LocationData] = []
     @State private var isRecording = false
@@ -67,7 +67,7 @@ struct RecordView: View {
         .toolbar(.hidden, for: .tabBar)
         .navigationDestination(isPresented: $navToLogView) {
             LogActivityView(
-                viewModel: viewModel,
+                viewModel: RecordViewModel(apiService: apiService),
                 routeData: $routeData
             )
         }

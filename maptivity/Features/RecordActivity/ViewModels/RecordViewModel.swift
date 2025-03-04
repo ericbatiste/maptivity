@@ -2,9 +2,15 @@ import SwiftUI
 
 @MainActor
 class RecordViewModel: ObservableObject {
-    @Published var error: APIError?
     @Published var isLoading: Bool = false
     @Published var showAlert = false
+    @Published var error: String? = nil
+    
+    private let apiService: APIService
+    
+    init(apiService: APIService) {
+        self.apiService = apiService
+    }
     
     func createActivity(
         title: String,
@@ -18,35 +24,36 @@ class RecordViewModel: ObservableObject {
         averageSpeed: Double,
         climbing: Double,
         descending: Double
-    ) {
+    ) async {
         isLoading = true
-        
-        Task {
-            do {
-                let newActivity = NewActivity(
-                    title: title,
-                    designation: designation,
-                    notes: notes,
-                    startTime: startTime,
-                    endTime: endTime,
-                    route: route,
-                    distance: distance,
-                    maxSpeed: maxSpeed,
-                    averageSpeed: averageSpeed,
-                    climbing: climbing,
-                    descending: descending
-                )
-                
-                _ = try await APIRequests.shared.createActivity(newActivity)
-                
-                error = nil
-            } catch let error as APIError {
-                self.error = error
-            } catch {
-                self.error = .networkError(error)
-            }
-            isLoading = false
-            showAlert = true
+    
+        do {
+            let newActivity = NewActivity(
+                title: title,
+                designation: designation,
+                notes: notes,
+                startTime: startTime,
+                endTime: endTime,
+                route: route,
+                distance: distance,
+                maxSpeed: maxSpeed,
+                averageSpeed: averageSpeed,
+                climbing: climbing,
+                descending: descending
+            )
+            
+            let _: Activity = try await apiService.request(
+                endpoint: "activities",
+                method: "POST",
+                body: newActivity,
+                requiresAuth: true
+            )
+            
+        } catch {
+            self.error = error.localizedDescription
         }
+        
+        isLoading = false
+        showAlert = true
     }
 }

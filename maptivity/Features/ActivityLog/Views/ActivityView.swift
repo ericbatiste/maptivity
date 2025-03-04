@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ActivityView: View {
-    @StateObject private var viewModel = ActivityViewModel()
+    @ObservedObject var viewModel: ActivityViewModel
     
     var body: some View {
         ScrollView {
@@ -13,12 +13,14 @@ struct ActivityView: View {
             .padding()
         }
         .onAppear() {
-            viewModel.fetchActivities()
+            Task {
+                await viewModel.fetchActivities()
+            }
         }
         .alert("Error", isPresented: $viewModel.showAlert) {
             Button("OK") {}
         } message: {
-            Text(viewModel.error?.localizedDescription ?? "Could not load activities.")
+            Text(viewModel.error ?? "Could not load activities.")
         }
         .overlay {
             if viewModel.isLoading {

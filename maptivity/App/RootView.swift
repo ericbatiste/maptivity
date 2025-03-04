@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct RootView: View {
+    @EnvironmentObject var apiService: APIService
     @State private var selectedTab = 0
     
     var body: some View {
@@ -21,7 +22,7 @@ struct RootView: View {
             }
             .tag(1)
             
-            ActivityView()
+            ActivityView(viewModel: ActivityViewModel(apiService: apiService))
                 .tabItem {
                     Image(systemName: "point.topleft.down.to.point.bottomright.filled.curvepath")
                     Text("Activity")

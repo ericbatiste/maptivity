@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AuthRouter: View {
-    @StateObject private var authManager = AuthManager()
+    @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
         Group {
@@ -9,10 +9,8 @@ struct AuthRouter: View {
                 LoadingView()
             } else if authManager.isAuthenticated {
                 RootView()
-                    .environmentObject(authManager)
             } else {
                 LoginView()
-                    .environmentObject(authManager)
             }
         }
     }
@@ -27,8 +25,4 @@ struct LoadingView: View {
                 .padding(.top)
         }
     }
-}
-
-#Preview {
-    AuthRouter()
 }

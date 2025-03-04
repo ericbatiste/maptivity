@@ -91,7 +91,11 @@ struct LogActivityView: View {
             }
         
             Section {
-                Button(action: submitActivity) {
+                Button {
+                    Task {
+                        await submitActivity()
+                    }
+                } label: {
                     HStack {
                         Spacer()
                         if viewModel.isLoading {
@@ -118,7 +122,7 @@ struct LogActivityView: View {
         .alert(isPresented: $viewModel.showAlert) {
             Alert(
                 title: Text(viewModel.error == nil ? "Success" : "Error"),
-                message: Text(viewModel.error?.localizedDescription ?? "Activity submitted successfully!"),
+                message: Text(viewModel.error ?? "Activity submitted successfully!"),
                 dismissButton: .default(Text("OK")) {
                     if viewModel.error == nil {
                         routeData = []
@@ -131,7 +135,7 @@ struct LogActivityView: View {
         }
     }
     
-    private func submitActivity() {
+    private func submitActivity() async {
         guard !routeData.isEmpty else { return }
         
         let formattedStartTime = routeData.first!.timestamp.toRubyDateTime
@@ -143,7 +147,7 @@ struct LogActivityView: View {
         let climbing = routeData.totalClimb()
         let descending = routeData.totalDescent()
         
-        viewModel.createActivity(
+        await viewModel.createActivity(
             title: title,
             designation: designation,
             notes: notes,

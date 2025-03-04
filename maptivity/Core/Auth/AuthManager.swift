@@ -23,12 +23,12 @@ class AuthManager: ObservableObject {
         error = nil
         
         do {
-            let requestBody = LoginRequest(email: email, password: password)
+            let credentials = LoginRequest(email: email, password: password)
             
             let response: TokenResponse = try await apiService.request(
                 endpoint: "auth/login",
                 method: "POST",
-                body: requestBody,
+                body: credentials,
                 requiresAuth: false
             )
             
