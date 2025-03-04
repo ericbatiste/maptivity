@@ -7,33 +7,15 @@ class AuthManager: ObservableObject {
     @Published var isLoading = false
     @Published var error: String? = nil
     
-    private let authRequests = AuthRequests()
+    private let tokenManager: TokenManager
+    private let apiService: APIService
     private let keychain = Keychain()
     private let tokenBufferTime: TimeInterval = 300
     
-    init() {
+    init(tokenManager: TokenManager, apiService: APIService) {
+        self.tokenManager = tokenManager
+        self.apiService = apiService
         checkAuthState()
-    }
-    
-    private func isAccessTokenValid() -> Bool {
-        guard let accessToken = keychain.getAccessToken(),
-              let exp = JWTParser.getExpirationDate(from: accessToken) else {
-            return false
-        }
-        
-        return exp.timeIntervalSinceNow > tokenBufferTime
-    }
-    
-    func checkAuthState() {
-        if isAccessTokenValid() {
-            isAuthenticated = true
-        } else if keychain.getRefreshToken() != nil {
-            Task {
-                try await refreshAccessToken()
-            }
-        } else {
-            isAuthenticated = false
-        }
     }
     
     func login(email: String, password: String) async {
@@ -41,7 +23,15 @@ class AuthManager: ObservableObject {
         error = nil
         
         do {
-            let response = try await authRequests.login(email: email, password: password)
+            let requestBody = LoginRequest(email: email, password: password)
+            
+            let response: TokenResponse = try await apiService.request(
+                endpoint: "auth/login",
+                method: "POST",
+                body: requestBody,
+                requiresAuth: false
+            )
+            
             keychain.setTokens(access: response.accessToken, refresh: response.refreshToken)
             isAuthenticated = true
         } catch {
@@ -52,7 +42,7 @@ class AuthManager: ObservableObject {
     }
     
     func logout() async {
-        guard let accessToken = keychain.getAccessToken() else {
+        guard let _ = keychain.getAccessToken() else {
             keychain.clearTokens()
             isAuthenticated = false
             return
@@ -62,7 +52,11 @@ class AuthManager: ObservableObject {
         error = nil
 
         do {
-            try await authRequests.logout(accessToken: accessToken)
+            let _: Bool = try await apiService.request(
+                endpoint: "auth/logout",
+                method: "DELETE",
+                requiresAuth: true
+            )
         } catch {
             self.error = error.localizedDescription
         }
@@ -72,40 +66,33 @@ class AuthManager: ObservableObject {
         isLoading = false
     }
     
-    func getValidAccessToken() async throws -> String? {
-        if let accessToken = keychain.getAccessToken() {
-            if let exp = JWTParser.getExpirationDate(from: accessToken),
-               exp.timeIntervalSinceNow > tokenBufferTime {
-                return accessToken
-            }
+
+    
+    private func isAccessTokenValid() -> Bool {
+        guard let accessToken = keychain.getAccessToken(),
+              let exp = JWTParser.getExpirationDate(from: accessToken) else {
+            return false
         }
         
-        guard keychain.getRefreshToken() != nil else {
-            throw AuthError.noValidTokens
-        }
-        
-        try await refreshAccessToken()
-        return keychain.getAccessToken()
+        return exp.timeIntervalSinceNow > tokenBufferTime
     }
     
-    private func refreshAccessToken() async throws {
-        guard let refreshToken = keychain.getRefreshToken() else {
-            error = "No refresh token available"
-            isAuthenticated = false
-            throw AuthError.noRefreshToken
-        }
-        
-        isLoading = true
-        
-        do {
-            let response = try await authRequests.refreshToken(refreshToken: refreshToken)
-            keychain.setTokens(access: response.accessToken, refresh: response.refreshToken)
+    private func checkAuthState() {
+        if isAccessTokenValid() {
             isAuthenticated = true
-        } catch {
-            self.error = error.localizedDescription
+        } else if keychain.getRefreshToken() != nil {
+            Task {
+                do {
+                    _ = try await tokenManager.getValidAccessToken()
+                    isAuthenticated = true
+                } catch {
+                    isAuthenticated = false
+                    keychain.clearTokens()
+                    self.error = error.localizedDescription
+                }
+            }
+        } else {
             isAuthenticated = false
-            throw error
         }
-        isLoading = false
     }
 }
