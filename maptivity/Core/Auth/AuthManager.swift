@@ -18,6 +18,30 @@ class AuthManager: ObservableObject {
         checkAuthState()
     }
     
+    // MARK: - API Requests
+    
+    func signUp(name: String, email: String, password: String) async {
+        isLoading = true
+        error = nil
+        
+        do {
+            let credentials = SignUpRequest(user: UserData(name: name, email: email, password: password))
+            print(credentials)
+            let response: TokenResponse = try await apiService.request(
+                endpoint: "auth/signup",
+                method: "POST",
+                body: credentials,
+                requiresAuth: false
+            )
+            
+            keychain.setTokens(access: response.accessToken, refresh: response.refreshToken)
+        } catch {
+            self.error = error.localizedDescription
+        }
+        
+        isLoading = false
+    }
+        
     func login(email: String, password: String) async {
         isLoading = true
         error = nil
@@ -66,7 +90,7 @@ class AuthManager: ObservableObject {
         isLoading = false
     }
     
-
+    // MARK: - Private Methods
     
     private func isAccessTokenValid() -> Bool {
         guard let accessToken = keychain.getAccessToken(),

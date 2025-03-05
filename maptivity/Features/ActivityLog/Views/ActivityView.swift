@@ -12,8 +12,8 @@ struct ActivityView: View {
             }
             .padding()
         }
-        .onAppear() {
-            Task {
+        .task {
+            if viewModel.activities.isEmpty {
                 await viewModel.fetchActivities()
             }
         }

@@ -16,7 +16,7 @@ class TokenManager: ObservableObject {
         }
         
         guard let refreshToken = keychain.getRefreshToken() else {
-            throw AuthError.noValidTokens
+            throw APIError.unauthorized
         }
         
         return try await refreshAccessToken(refreshToken: refreshToken)

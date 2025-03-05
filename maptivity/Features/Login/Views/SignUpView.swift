@@ -1,10 +1,13 @@
 import SwiftUI
 
 struct SignUpView: View {
+    @EnvironmentObject var authManager: AuthManager
+    
     @State private var name: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
+    @State private var isLoading: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -16,6 +19,9 @@ struct SignUpView: View {
                         .fontWeight(.semibold)
                     
                     TextField("Name", text: $name)
+                        .autocapitalization(.words)
+                        .disableAutocorrection(true)
+                        .textContentType(.name)
                         .padding(12)
                         .background(Color(.systemBackground))
                         .cornerRadius(8)
@@ -26,6 +32,10 @@ struct SignUpView: View {
                         .tint(.blue)
                     
                     TextField("Email", text: $email)
+                        .autocapitalization(.none)
+                        .keyboardType(.emailAddress)
+                        .disableAutocorrection(true)
+                        .textContentType(.emailAddress)
                         .padding(12)
                         .background(Color(.systemBackground))
                         .cornerRadius(8)
@@ -36,6 +46,7 @@ struct SignUpView: View {
                         .tint(.blue)
                     
                     SecureField("Password", text: $password)
+                        .textContentType(.newPassword)
                         .padding(12)
                         .background(Color(.systemBackground))
                         .cornerRadius(8)
@@ -46,6 +57,7 @@ struct SignUpView: View {
                         .tint(.blue)
                     
                     SecureField("Confirm Password", text: $confirmPassword)
+                        .textContentType(.newPassword)
                         .padding(12)
                         .background(Color(.systemBackground))
                         .cornerRadius(8)
@@ -55,15 +67,29 @@ struct SignUpView: View {
                         )
                         .tint(.blue)
                     
-                    Button(action: {}) {
-                        Text("Submit")
-                            .frame(maxWidth: .infinity)
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding(12)
-                            .background(Color.blue)
-                            .cornerRadius(8)
+                    Button{
+                        Task {
+                            if validateForm() {
+                                isLoading = true
+                                await authManager.signUp(name: name, email: email, password: password)
+                                isLoading = false
+                            }
+                        }
+                    } label: {
+                        if isLoading {
+                            ProgressView()
+                                .tint(.white)
+                        } else {
+                            Text("Submit")
+                                .frame(maxWidth: .infinity)
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(12)
+                                .background(Color.blue)
+                                .cornerRadius(8)
+                        }
                     }
+                    .disabled(isLoading)
                 }
                 Spacer()
             }
@@ -72,5 +98,9 @@ struct SignUpView: View {
             .navigationBarTitleDisplayMode(.inline)
             .ignoresSafeArea()
         }
+    }
+    
+    private func validateForm() -> Bool {
+        !name.isEmpty && !email.isEmpty && !password.isEmpty && password == confirmPassword
     }
 }
