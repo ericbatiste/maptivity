@@ -57,4 +57,4 @@ Maptivity is currently under active development and is not yet feature complete.
 
 ## Backend
 
-This app requires the [Maptivity backend API](https://github.com/ericbatiste/maptivity-be) for data persistence and authentication.
+This app requires the [Maptivity backend API](https://github.com/ericbatiste/maptivity_be) for data persistence and authentication.
