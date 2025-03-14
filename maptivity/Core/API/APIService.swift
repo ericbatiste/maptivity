@@ -1,10 +1,15 @@
 import Foundation
 
 class APIService: ObservableObject {
-    private let rootPath = "http://localhost:3000/api/v1/"
+    private let rootPath: URL
     private let tokenManager: TokenManager
     
     init(tokenManager: TokenManager) {
+        guard let urlString = Bundle.main.infoDictionary?["DatabaseURL"] as? String,
+              let path = URL(string: urlString) else {
+            fatalError("Database URL not found or is invalid")
+        }
+        self.rootPath = path
         self.tokenManager = tokenManager
     }
     
@@ -14,11 +19,7 @@ class APIService: ObservableObject {
         body: Encodable? = nil,
         requiresAuth: Bool = true
     ) async throws -> T {
-        guard let url = URL(string: rootPath + endpoint) else {
-            throw APIError.invalidURL
-        }
-        
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: rootPath.appendingPathComponent(endpoint))
         request.httpMethod = method
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
@@ -43,11 +44,11 @@ class APIService: ObservableObject {
         }
         
         let (data, response): (Data, URLResponse)
-            do {
-                (data, response) = try await URLSession.shared.data(for: request)
-            } catch let error {
-                throw APIError.networkError(error)
-            }
+        do {
+            (data, response) = try await URLSession.shared.data(for: request)
+        } catch let error {
+            throw APIError.networkError(error)
+        }
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse

@@ -3,9 +3,15 @@ import Foundation
 class TokenManager: ObservableObject {
     private let keychain = Keychain()
     private let tokenBufferTime: TimeInterval = 300
-    private let rootPath = "http://localhost:3000/api/v1/"
+    private let rootPath: URL
     
-    init() {}
+    init() {
+        guard let urlString = Bundle.main.infoDictionary?["DatabaseURL"] as? String,
+              let path = URL(string: urlString) else {
+            fatalError("Database URL not found or is invalid")
+        }
+        self.rootPath = path
+    }
     
     func getValidAccessToken() async throws -> String {
         if let accessToken = keychain.getAccessToken() {
@@ -23,11 +29,7 @@ class TokenManager: ObservableObject {
     }
     
     private func refreshAccessToken(refreshToken: String) async throws -> String {
-        guard let url = URL(string: rootPath + "auth/refresh") else {
-            throw APIError.invalidURL
-        }
-        
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: rootPath.appendingPathComponent("auth/refresh"))
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
@@ -55,7 +57,5 @@ class TokenManager: ObservableObject {
             throw APIError.serverError(statusCode: httpResponse.statusCode)
         }
     }
-    
-    
 }
 
