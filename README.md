@@ -25,8 +25,8 @@ Maptivity allows users to record, view, and manage their activities with detaile
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/your-app-name-ios.git
-   cd your-app-name-ios
+   git clone https://github.com/ericbatiste/maptivity.git
+   cd maptivity
    ```
 
 2. Install dependencies:
@@ -38,10 +38,10 @@ Maptivity allows users to record, view, and manage their activities with detaile
    # Open the project in Xcode and resolve packages
    ```
 
-3. Create a `Config.xcconfig` file with your Mapbox access token:
+3. Create a `Config.xcconfig` file with your Mapbox access token and database url:
    ```
-   MAPBOX_ACCESS_TOKEN=your_mapbox_access_token_here
-   API_BASE_URL=your_backend_api_url_here
+   MBX_ACCESS_TOKEN=your_mapbox_access_token_here
+   DATABASE_URL=your_backend_api_url_here
    ```
 
 4. Open the project in Xcode and run.
