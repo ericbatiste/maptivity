@@ -2,7 +2,18 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var apiService: APIService
+    
     @State private var selectedTab = 0
+    
+    init() {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = UIColor.systemGray6
+            
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().compactAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        }
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -32,6 +43,10 @@ struct RootView: View {
     }
 }
 
-#Preview {
-    RootView()
-}
+//#Preview {
+//    let tokenManager = TokenManager()
+//    let apiService = APIService(tokenManager: tokenManager)
+//    
+//    RootView()
+//        .environmentObject(apiService)
+//}

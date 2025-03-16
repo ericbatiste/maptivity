@@ -9,6 +9,7 @@ struct LogActivityView: View {
     @State private var notes: String = ""
     @State private var showingSubmitAlert: Bool = false
     
+    @Binding var isOnRoute: Bool
     @Binding var routeData: [LocationData]
     
     let activities = [
@@ -27,7 +28,7 @@ struct LogActivityView: View {
             Section {
                 VStack(spacing: 20) {
                     
-                    // Title Form Element...
+                    // MARK: - Title Form Element
                     TextField("Give your activity a title...", text: $title)
                         .padding(12)
                         .background(Color(.systemBackground))
@@ -38,7 +39,7 @@ struct LogActivityView: View {
                         )
                         .tint(.blue)
                     
-                    // Picker Form Element...
+                    // MARK: - Picker Form Element...
                     Menu {
                         Picker("Activity", selection: $designation) {
                             ForEach(activities, id: \.self) { activity in
@@ -65,7 +66,7 @@ struct LogActivityView: View {
                         )
                     }
                     
-                    // Notes Form Element...
+                    // MARK: - Notes Form Element...
                     ZStack(alignment: .topLeading) {
                         TextEditor(text: $notes)
                             .frame(minHeight: 120)
@@ -89,7 +90,8 @@ struct LogActivityView: View {
                 }
                 .padding(.vertical, 20)
             }
-        
+            
+            // MARK: - Form Submit Btn
             Section {
                 Button {
                     Task {
@@ -125,6 +127,7 @@ struct LogActivityView: View {
                 message: Text(viewModel.error ?? "Activity submitted successfully!"),
                 dismissButton: .default(Text("OK")) {
                     if viewModel.error == nil {
+                        isOnRoute = false
                         routeData = []
                         title = ""
                         notes = ""

@@ -11,27 +11,37 @@ struct RecordControlView: View {
         ZStack {
             VStack {
                 if isRecording && isOnRoute {
-                    CircleButton(systemName: "pause.circle") {
+                    CircleButton(
+                        systemName: "pause.fill",
+                        backgroundColor: Color(red: 0.952, green: 0.572, blue: 0.188)
+                    ) {
                         isRecording = false
                         isOnRoute = true
                     }
                     
                 } else if !isRecording && isOnRoute {
                     HStack {
-                        CircleButton(systemName: "record.circle") {
+                        CircleButton(
+                            systemName: "circle.fill",
+                            backgroundColor: Color(red: 0.270, green: 0.811, blue: 0.819)
+                        ) {
                             isRecording = true
                             isOnRoute = true
                         }
                         
-                        CircleButton(systemName: "stop.circle") {
-                            isRecording = false
-                            isOnRoute = false
+                        CircleButton(
+                            systemName: "stop.fill",
+                            backgroundColor: Color(red: 0.898, green: 0.176, blue: 0.050)
+                        ) {
                             navToLogView = true
                         }
                     }
                     
                 } else if !isRecording && !isOnRoute {
-                    CircleButton(systemName: "record.circle") {
+                    CircleButton(
+                        systemName: "circle.fill",
+                        backgroundColor: Color(red: 0.2703, green: 0.811, blue: 0.819)
+                    ) {
                         isRecording = true
                         isOnRoute = true
                     }
@@ -40,35 +50,39 @@ struct RecordControlView: View {
             
             HStack {
                 Spacer()
-                Button {
-                    showMapView.toggle()
-                } label: {
-                    Image(systemName: "mappin.circle")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(Color(.systemGray))
-                        .frame(width: 40, height: 40)
-                        .clipShape(Circle())
+                if isRecording || isOnRoute {
+                    Button {
+                        showMapView.toggle()
+                    } label: {
+                        Image(systemName: showMapView ? "mappin.circle.fill" : "mappin.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundColor(.primary)
+                            .frame(width: 40, height: 40)
+                        
+                    }
+                    .padding(.trailing)
                 }
-                .padding(.trailing)
             }
         }
+        .background(Color(.systemGray6))
     }
 }
 
 struct CircleButton: View {
     let systemName: String
+    let backgroundColor: Color
     let action: () -> Void
     
     var body: some View {
         Button(action: action) {
             Image(systemName: systemName)
                 .resizable()
-                .scaledToFit()
-                .foregroundColor(.white)
-                .frame(width: 60, height: 60)
-                .background(Color.blue)
-                .clipShape(Circle())
+                .foregroundColor(.primary)
+                .padding(18)
+                .frame(width: 68, height: 68)
+                .background(backgroundColor)
+                .cornerRadius(10)
         }
         .padding()
     }

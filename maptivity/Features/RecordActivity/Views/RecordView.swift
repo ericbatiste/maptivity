@@ -11,31 +11,45 @@ struct RecordView: View {
     @State private var navToLogView = false
     
     @Binding var selectedTab: Int
+    
+    var paused: Bool {
+        return !isRecording && isOnRoute
+    }
+    
+    var idle: Bool {
+        return !isRecording && !isOnRoute
+    }
 
     var body: some View {
-        VStack {
-            if !isRecording && !isOnRoute {
+        VStack(spacing: 0) {
+            if idle || showMapView {
                 MapView(
                     isRecording: $isRecording,
                     routeData: $routeData
                 )
-            } else if showMapView {
+            } else if paused && !showMapView {
                 MapView(
                     isRecording: $isRecording,
                     routeData: $routeData
                 )
                 
                 RouteDataView(
-                    routeData: $routeData
+                    routeData: $routeData,
+                    isRecording: $isRecording,
+                    isOnRoute: $isOnRoute,
+                    showMapView: $showMapView
                 )
             } else {
                 Spacer()
                 RouteDataView(
-                    routeData: $routeData
+                    routeData: $routeData,
+                    isRecording: $isRecording,
+                    isOnRoute: $isOnRoute,
+                    showMapView: $showMapView
                 )
                 Spacer()
+
             }
-            
             RecordControlView(
                 isRecording: $isRecording,
                 isOnRoute: $isOnRoute,
@@ -68,6 +82,7 @@ struct RecordView: View {
         .navigationDestination(isPresented: $navToLogView) {
             LogActivityView(
                 viewModel: RecordViewModel(apiService: apiService),
+                isOnRoute: $isOnRoute,
                 routeData: $routeData
             )
         }
